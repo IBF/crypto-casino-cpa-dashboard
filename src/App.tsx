@@ -15,6 +15,7 @@ export default function App() {
   const [selectedOfferType, setSelectedOfferType] = useState<OfferType | 'All'>('All');
   const [selectedGeos, setSelectedGeos] = useState<string[]>([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isGeoMenuOpen, setIsGeoMenuOpen] = useState(false);
 
   // Apply filters and time multipliers to create realistic dynamic data
   const filteredCampaigns = useMemo(() => {
@@ -174,24 +175,33 @@ export default function App() {
             
             {/* GEO Filter */}
             <div className="w-full xl:w-auto">
-               <div className="relative group/geo">
-                 <button className="w-full flex items-center justify-between gap-3 px-4 py-2.5 bg-black/40 rounded-xl border border-white/10 text-sm font-mono text-gray-300 hover:bg-white/5 transition-colors">
+               <div className="relative">
+                 <button 
+                   onClick={() => setIsGeoMenuOpen(!isGeoMenuOpen)}
+                   className="w-full flex items-center justify-between gap-3 px-4 py-2.5 bg-black/40 rounded-xl border border-white/10 text-sm font-mono text-gray-300 hover:bg-white/5 transition-colors"
+                 >
                    <span>{selectedGeos.length > 0 ? `GEOs: ${selectedGeos.length} Selected` : 'All Regions (GEO)'}</span>
                    <ChevronDown className="w-4 h-4" />
                  </button>
-                 <div className="absolute top-full right-0 mt-2 w-64 bg-surface border border-white/10 rounded-xl p-3 shadow-2xl opacity-0 invisible group-hover/geo:opacity-100 group-hover/geo:visible transition-all z-50 max-h-[300px] overflow-y-auto custom-scrollbar">
-                   <div className="flex flex-wrap gap-2">
-                     {GEO_OPTIONS.map(geo => (
-                       <button
-                         key={geo}
-                         onClick={() => toggleGeo(geo)}
-                         className={`px-2.5 py-1 rounded text-xs font-mono border transition-colors ${selectedGeos.includes(geo) ? 'bg-crypto-primary/20 border-crypto-primary/50 text-crypto-neon' : 'bg-black/50 border-white/10 text-gray-400 hover:border-white/30 hover:text-white'}`}
-                       >
-                         {geo}
-                       </button>
-                     ))}
-                   </div>
-                 </div>
+                 
+                 {isGeoMenuOpen && (
+                   <>
+                     <div className="fixed inset-0 z-40" onClick={() => setIsGeoMenuOpen(false)}></div>
+                     <div className="absolute top-full xl:right-0 mt-2 w-full xl:w-64 min-w-[250px] bg-surface border border-white/10 rounded-xl p-3 shadow-2xl z-50 max-h-[300px] overflow-y-auto custom-scrollbar">
+                       <div className="flex flex-wrap gap-2">
+                         {GEO_OPTIONS.map(geo => (
+                           <button
+                             key={geo}
+                             onClick={() => toggleGeo(geo)}
+                             className={`px-2.5 py-1 rounded text-xs font-mono border transition-colors ${selectedGeos.includes(geo) ? 'bg-crypto-primary/20 border-crypto-primary/50 text-crypto-neon' : 'bg-black/50 border-white/10 text-gray-400 hover:border-white/30 hover:text-white'}`}
+                           >
+                             {geo}
+                           </button>
+                         ))}
+                       </div>
+                     </div>
+                   </>
+                 )}
                </div>
             </div>
           </div>
