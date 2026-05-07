@@ -51,6 +51,12 @@ export function CampaignsTable({ campaigns }: CampaignsTableProps) {
     return <ArrowUpDown className={`inline w-3 h-3 ml-1 ${sortConfig?.key === key ? 'text-white' : 'text-gray-600'}`} />;
   };
 
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+
   return (
     <div className="glass-panel overflow-hidden flex flex-col mt-8">
       <div className="p-5 border-b border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
@@ -72,6 +78,7 @@ export function CampaignsTable({ campaigns }: CampaignsTableProps) {
           <thead className="bg-surface/50 text-gray-400 text-xs uppercase tracking-wider">
             <tr>
               <th className="px-4 py-4 cursor-pointer hover:text-gray-200" onClick={() => handleSort('name')}>Campaign {getSortIcon('name')}</th>
+              <th className="px-4 py-4">Date</th>
               <th className="px-4 py-4 cursor-pointer hover:text-gray-200" onClick={() => handleSort('clicks')}>Clicks {getSortIcon('clicks')}</th>
               <th className="px-4 py-4 cursor-pointer hover:text-gray-200" onClick={() => handleSort('leads')}>Leads {getSortIcon('leads')}</th>
               <th className="px-4 py-4 cursor-pointer hover:text-gray-200" onClick={() => handleSort('ftds')}>FTDs {getSortIcon('ftds')}</th>
@@ -116,6 +123,7 @@ export function CampaignsTable({ campaigns }: CampaignsTableProps) {
                       </div>
                     </div>
                   </td>
+                  <td className="px-4 py-3 text-gray-400 text-xs whitespace-nowrap">{currentDate}</td>
                   <td className="px-4 py-3 text-gray-300">{formatNumber(campaign.clicks)}</td>
                   <td className="px-4 py-3 text-gray-300">{formatNumber(campaign.leads)}</td>
                   <td className="px-4 py-3 font-semibold text-white">{formatNumber(campaign.ftds)}</td>

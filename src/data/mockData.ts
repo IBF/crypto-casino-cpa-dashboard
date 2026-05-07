@@ -169,7 +169,7 @@ export const CAMPAIGNS: Campaign[] = [
   }
 ];
 
-export const GEO_OPTIONS = ['WW', 'EU', 'US', 'CA', 'BR', 'MX', 'CO', 'KZ', 'UZ', 'PL', 'CZ', 'NZ', 'IE', 'JP', 'IN', 'NG', 'KE', 'BD', 'PK', 'DE', 'AT', 'CH'];
+export const GEO_OPTIONS = ['WW', 'EU', 'US', 'CA', 'BR', 'MX', 'CO', 'KZ', 'UZ', 'PL', 'CZ', 'NZ', 'IE', 'JP', 'IN', 'NG', 'KE', 'BD', 'PK', 'DE', 'AT', 'CH', 'NO', 'SE', 'FI', 'DK', 'BE', 'ES', 'FR', 'IT', 'SA', 'QT', 'KW', 'BH', 'TH', 'MY', 'ZA', 'TR', 'HK', 'SG'];
 
 // We'll multiply these values depending on the "Time Period" selected
 export const TIME_MULTIPLIERS = {
