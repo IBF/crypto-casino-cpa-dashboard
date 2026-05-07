@@ -174,10 +174,10 @@ export default function App() {
             </div>
             
             {/* GEO Filter */}
-            <div className="w-full xl:w-auto">
-               <div className="relative">
+            <div className={`w-full xl:w-auto relative ${isGeoMenuOpen ? 'z-50' : 'z-10'}`}>
                  <button 
-                   onClick={() => setIsGeoMenuOpen(!isGeoMenuOpen)}
+                   type="button"
+                   onClick={(e) => { e.stopPropagation(); setIsGeoMenuOpen(!isGeoMenuOpen); }}
                    className="w-full flex items-center justify-between gap-3 px-4 py-2.5 bg-black/40 rounded-xl border border-white/10 text-sm font-mono text-gray-300 hover:bg-white/5 transition-colors"
                  >
                    <span>{selectedGeos.length > 0 ? `GEOs: ${selectedGeos.length} Selected` : 'All Regions (GEO)'}</span>
@@ -186,14 +186,15 @@ export default function App() {
                  
                  {isGeoMenuOpen && (
                    <>
-                     <div className="fixed inset-0 z-40" onClick={() => setIsGeoMenuOpen(false)}></div>
-                     <div className="absolute top-full xl:right-0 mt-2 w-full xl:w-64 min-w-[250px] bg-surface border border-white/10 rounded-xl p-3 shadow-2xl z-50 max-h-[300px] overflow-y-auto custom-scrollbar">
-                       <div className="flex flex-wrap gap-2">
+                     <div className="fixed inset-0 z-40 bg-transparent" onClick={(e) => { e.stopPropagation(); setIsGeoMenuOpen(false); }}></div>
+                     <div className="absolute top-[calc(100%+8px)] left-0 xl:left-auto xl:right-0 w-full xl:w-[320px] bg-surface pb-4 border border-white/10 rounded-xl p-3 shadow-[0_10px_40px_rgba(0,0,0,0.8)] z-50 max-h-[350px] overflow-y-auto custom-scrollbar ring-1 ring-white/5 origin-top-right">
+                       <div className="grid grid-cols-4 sm:grid-cols-6 xl:grid-cols-4 gap-2">
                          {GEO_OPTIONS.map(geo => (
                            <button
+                             type="button"
                              key={geo}
-                             onClick={() => toggleGeo(geo)}
-                             className={`px-2.5 py-1 rounded text-xs font-mono border transition-colors ${selectedGeos.includes(geo) ? 'bg-crypto-primary/20 border-crypto-primary/50 text-crypto-neon' : 'bg-black/50 border-white/10 text-gray-400 hover:border-white/30 hover:text-white'}`}
+                             onClick={(e) => { e.stopPropagation(); toggleGeo(geo); }}
+                             className={`px-1 py-2 rounded-lg text-xs font-mono font-semibold border transition-all flex items-center justify-center ${selectedGeos.includes(geo) ? 'bg-crypto-primary/20 border-crypto-primary/50 text-crypto-neon shadow-[0_0_8px_rgba(79,172,254,0.15)]' : 'bg-black/50 border-white/10 text-gray-400 hover:border-white/30 hover:text-white hover:bg-black/80'}`}
                            >
                              {geo}
                            </button>
@@ -202,7 +203,6 @@ export default function App() {
                      </div>
                    </>
                  )}
-               </div>
             </div>
           </div>
 
