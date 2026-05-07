@@ -138,7 +138,7 @@ export default function App() {
         <div className="p-6 max-w-[1600px] w-full mx-auto">
           
           {/* Filters Bar */}
-          <div className="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-6 mb-8 bg-surface/30 p-4 rounded-2xl border border-white/5">
+          <div className="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-6 mb-8 bg-surface/30 p-4 rounded-2xl border border-white/5 relative z-50">
             {/* Time Filter */}
             <div className="flex p-1 bg-black/40 rounded-xl w-full xl:w-auto overflow-x-auto">
               {(Object.keys(TIME_MULTIPLIERS) as Array<keyof typeof TIME_MULTIPLIERS>).map(t => (
@@ -174,14 +174,14 @@ export default function App() {
             </div>
             
             {/* GEO Filter */}
-            <div className={`w-full xl:w-auto relative ${isGeoMenuOpen ? 'z-50' : 'z-10'}`}>
+            <div className={`w-full xl:w-auto relative ${isGeoMenuOpen ? 'z-50' : 'z-30'}`}>
                  <button 
                    type="button"
-                   onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsGeoMenuOpen(!isGeoMenuOpen); }}
+                   onClick={() => setIsGeoMenuOpen(!isGeoMenuOpen)}
                    className="w-full flex items-center justify-between gap-3 px-4 py-2.5 bg-black/40 rounded-xl border border-white/10 text-sm font-mono text-gray-300 hover:bg-white/5 transition-colors cursor-pointer"
                  >
-                   <span className="pointer-events-none">{selectedGeos.length > 0 ? `GEOs: ${selectedGeos.length} Selected` : 'All Regions (GEO)'}</span>
-                   <ChevronDown className="w-4 h-4 pointer-events-none" />
+                   <span>{selectedGeos.length > 0 ? `GEOs: ${selectedGeos.length} Selected` : 'All Regions (GEO)'}</span>
+                   <ChevronDown className="w-4 h-4" />
                  </button>
                  
                  {isGeoMenuOpen && (
@@ -189,7 +189,7 @@ export default function App() {
                      {/* Backdrop */}
                      <div 
                        className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm xl:bg-transparent" 
-                       onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsGeoMenuOpen(false); }}
+                       onClick={() => setIsGeoMenuOpen(false)}
                      ></div>
                      
                      {/* Dropdown / Bottom Sheet */}
@@ -197,7 +197,8 @@ export default function App() {
                        <div className="flex justify-between items-center mb-4 xl:hidden">
                           <span className="font-heading font-semibold text-lg text-white">Select Regions</span>
                           <button 
-                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsGeoMenuOpen(false); }} 
+                            type="button"
+                            onClick={() => setIsGeoMenuOpen(false)} 
                             className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
                           >
                             ✕
@@ -210,10 +211,10 @@ export default function App() {
                              <button
                                type="button"
                                key={geo}
-                               onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleGeo(geo); }}
+                               onClick={(e) => { e.preventDefault(); toggleGeo(geo); }}
                                className={`px-1 py-3 xl:py-2 rounded-lg text-sm xl:text-xs font-mono font-semibold border transition-all flex items-center justify-center cursor-pointer ${selectedGeos.includes(geo) ? 'bg-crypto-primary/20 border-crypto-primary/50 text-crypto-neon shadow-[0_0_8px_rgba(79,172,254,0.15)] focus:ring focus:ring-crypto-primary' : 'bg-black/50 border-white/10 text-gray-400 hover:border-white/30 hover:text-white hover:bg-black/80 focus:ring focus:ring-white/20'}`}
                              >
-                               <span className="pointer-events-none">{geo}</span>
+                               <span>{geo}</span>
                              </button>
                            ))}
                          </div>
