@@ -79,7 +79,7 @@ export function DashboardCharts({ campaigns }: DashboardChartsProps) {
           <p className="text-xs text-gray-400 uppercase tracking-wider">Spend vs Revenue</p>
         </div>
         <div className="h-[250px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
             <AreaChart data={trendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
@@ -143,8 +143,8 @@ export function DashboardCharts({ campaigns }: DashboardChartsProps) {
           <h3 className="text-lg font-semibold text-white">Offer Mix</h3>
           <p className="text-xs text-gray-400 uppercase tracking-wider">Revenue by Vertical</p>
         </div>
-        <div className="flex-grow flex items-center justify-center -mt-6">
-          <ResponsiveContainer width="100%" height={200}>
+        <div className="w-full flex-grow flex items-center justify-center -mt-6">
+          <ResponsiveContainer width="100%" height={200} minWidth={0}>
             <PieChart>
               <Pie
                 data={pieData}

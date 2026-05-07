@@ -176,8 +176,10 @@ export default function App() {
             {/* GEO Filter */}
             <div className={`w-full xl:w-auto relative ${isGeoMenuOpen ? 'z-50' : 'z-30'}`}>
                  <button 
-                   onClick={() => setIsGeoMenuOpen(!isGeoMenuOpen)}
-                   className="w-full flex items-center justify-between gap-3 px-4 py-3 bg-black/40 rounded-xl border border-white/10 text-sm font-mono text-gray-300 hover:bg-white/5 transition-colors"
+                   type="button"
+                   onClick={(e) => { e.stopPropagation(); setIsGeoMenuOpen((prev) => !prev); }}
+                   onTouchEnd={(e) => { e.stopPropagation(); e.preventDefault(); setIsGeoMenuOpen((prev) => !prev); }}
+                   className="w-full flex items-center justify-between gap-3 px-4 py-3 bg-black/40 rounded-xl border border-white/10 text-sm font-mono text-gray-300 hover:bg-white/5 transition-colors cursor-pointer"
                  >
                    <span>{selectedGeos.length > 0 ? `GEOs: ${selectedGeos.length} Selected` : 'All Regions (GEO)'}</span>
                    <ChevronDown className={`w-4 h-4 transition-transform ${isGeoMenuOpen ? 'rotate-180' : ''}`} />
@@ -192,11 +194,12 @@ export default function App() {
                      ></div>
                      
                      {/* Dropdown Menu */}
-                     <div className="absolute top-[calc(100%+8px)] left-0 xl:left-auto xl:right-0 w-full xl:w-[320px] bg-surface pb-4 border border-white/10 rounded-xl p-3 shadow-2xl z-50 max-h-[350px] overflow-y-auto custom-scrollbar ring-1 ring-white/5">
+                     <div className="fixed bottom-0 left-0 right-0 xl:absolute xl:top-[calc(100%+8px)] xl:bottom-auto xl:left-auto xl:right-0 w-full xl:w-[320px] bg-surface pb-8 xl:pb-4 border-t border-x xl:border border-white/10 rounded-t-2xl xl:rounded-xl p-4 xl:p-3 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] xl:shadow-[0_10px_40px_rgba(0,0,0,0.8)] z-50 max-h-[70vh] xl:max-h-[350px] overflow-y-auto custom-scrollbar ring-1 ring-white/5">
                        <div className="flex justify-between items-center mb-4 xl:hidden">
                           <span className="font-heading font-semibold text-lg text-white">Select Regions</span>
                           <button 
-                            onClick={() => setIsGeoMenuOpen(false)} 
+                            type="button"
+                            onClick={(e) => { e.stopPropagation(); setIsGeoMenuOpen(false); }} 
                             className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
                           >
                             ✕
@@ -206,9 +209,11 @@ export default function App() {
                        <div className="grid grid-cols-4 sm:grid-cols-6 xl:grid-cols-4 gap-2">
                          {GEO_OPTIONS.map(geo => (
                            <button
+                             type="button"
                              key={geo}
                              onClick={() => toggleGeo(geo)}
-                             className={`px-1 py-3 xl:py-2 rounded-lg text-sm xl:text-xs font-mono font-semibold border transition-all flex items-center justify-center ${selectedGeos.includes(geo) ? 'bg-crypto-primary/20 border-crypto-primary/50 text-crypto-neon shadow-[0_0_8px_rgba(79,172,254,0.15)]' : 'bg-black/50 border-white/10 text-gray-400 hover:border-white/30 hover:text-white'}`}
+                             onTouchEnd={(e) => { e.preventDefault(); toggleGeo(geo); }}
+                             className={`px-1 py-3 xl:py-2 rounded-lg text-sm xl:text-xs font-mono font-semibold border transition-all flex items-center justify-center cursor-pointer ${selectedGeos.includes(geo) ? 'bg-crypto-primary/20 border-crypto-primary/50 text-crypto-neon shadow-[0_0_8px_rgba(79,172,254,0.15)]' : 'bg-black/50 border-white/10 text-gray-400 hover:border-white/30 hover:text-white'}`}
                            >
                              <span>{geo}</span>
                            </button>
@@ -217,7 +222,8 @@ export default function App() {
                        
                        <div className="mt-4 xl:hidden">
                          <button 
-                           onClick={() => setIsGeoMenuOpen(false)}
+                           type="button"
+                           onClick={(e) => { e.stopPropagation(); setIsGeoMenuOpen(false); }}
                            className="w-full py-3 bg-crypto-primary/20 text-crypto-neon rounded-lg font-mono text-sm font-semibold border border-crypto-primary/30"
                          >
                            Apply Filters
